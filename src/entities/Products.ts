@@ -21,56 +21,56 @@ export class Products extends BaseEntity {
   @Column({ type: "text" })
   name: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   category!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   description!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   short_description!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   price!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   sale_price!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   regular_price!: string;
 
-  @Field()
+  @Field(() => Number, { nullable: true })
   @Column({ type: "integer", nullable: true })
   stock_quantity!: number;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   weight!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   length!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   width!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text" })
   height!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({ type: "text", array: true, nullable: true })
-  related_ids!: number;
+  related_ids!: string[];
 
-  @Field()
-  @Column({ type: "text", array: true, nullable: true })
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
   images!: string;
 
   @Field(() => String)

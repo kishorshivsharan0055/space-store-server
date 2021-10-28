@@ -97,18 +97,6 @@ export class UserResolver {
     return await User.findOne(userId);
   }
 
-  @Authorized()
-  @Query(() => [User], { nullable: true })
-  async getUsersFromContacts(
-    @Arg("contacts", () => [String]) contacts: string[]
-  ): Promise<User[] | undefined> {
-    return await User.find({
-      where: {
-        phoneNo: In(contacts),
-      },
-    });
-  }
-
   @Mutation(() => User, { nullable: true })
   async checkUserExists(
     @Arg("phoneNo", () => String) phoneNo: string
