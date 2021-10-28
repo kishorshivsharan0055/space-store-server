@@ -66,11 +66,11 @@ export class Products extends BaseEntity {
   height!: string;
 
   @Field()
-  @Column({ type: "array" })
+  @Column({ type: "text", array: true, nullable: true })
   related_ids!: number;
 
   @Field()
-  @Column({ type: "array" })
+  @Column({ type: "text", array: true, nullable: true })
   images!: string;
 
   @Field(() => String)

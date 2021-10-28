@@ -1,19 +1,17 @@
-import { Products } from "../entities/Products";
 import {
   Arg,
   Authorized,
   Ctx,
   Field,
-  FieldResolver,
   InputType,
   Int,
   Mutation,
   ObjectType,
   Query,
   Resolver,
-  Root,
 } from "type-graphql";
 import { NOT_LOGGED_IN_ERROR, USER_NOT_FOUND_ERROR } from "../constants";
+import { Products } from "../entities/Products";
 import { User } from "../entities/User";
 import { Context, CustomError } from "../types/types";
 

@@ -4,7 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 
@@ -14,8 +14,8 @@ import {
 })
 export class User extends BaseEntity {
   @Field(() => String)
-  @PrimaryColumn()
-  userId: string;
+  @PrimaryGeneratedColumn()
+  user_id: string;
 
   @Field()
   @Column({ type: "text" })
@@ -31,7 +31,11 @@ export class User extends BaseEntity {
 
   @Field(() => String, { nullable: false })
   @Column({ nullable: true })
-  phoneNo: string;
+  phoneNo?: string;
+
+  @Field(() => String, { nullable: false })
+  @Column({ nullable: true })
+  type: "CUSTOMER" | "ADMIN";
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -43,23 +47,23 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   date_modified: Date;
 
-  @Field()
-  @Column({ type: "text" })
-  address_1!: string;
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
+  address_1?: string;
 
-  @Field()
-  @Column({ type: "text" })
-  address_2!: string;
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
+  address_2?: string;
 
-  @Field()
-  @Column({ type: "text" })
-  city!: string;
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
+  city?: string;
 
-  @Field()
-  @Column({ type: "text" })
-  postcode!: string;
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
+  postcode?: string;
 
-  @Field()
-  @Column({ type: "text" })
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
   state!: string;
 }

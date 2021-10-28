@@ -38,7 +38,7 @@ const Main = async () => {
     }
   }
 
-  const corsOrigins = ["http://localhost:3000", "http://192.168.1.7:3000"];
+  const corsOrigins = ["http://localhost:3000"];
   const app = express();
 
   app.use(express.json({ limit: "50mb" }));

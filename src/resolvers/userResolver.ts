@@ -13,7 +13,6 @@ import { ILike, In } from "typeorm";
 import { NOT_LOGGED_IN_ERROR } from "../constants";
 import { User } from "../entities/User";
 import { Context, CustomError } from "../types/types";
-import { getUserInfo } from "../utils/firebaseUtils";
 
 @ObjectType()
 export class UserResponse {
@@ -49,43 +48,28 @@ export class UserInput {
   phoneNo?: string;
 
   @Field({ nullable: true })
-  profilePic?: string;
+  type?: "CUSTOMER" | "ADMIN";
 
   @Field({ nullable: true })
-  address_1!: string;
+  address_1?: string;
 
   @Field({ nullable: true })
-  address_2!: string;
+  address_2?: string;
 
   @Field({ nullable: true })
-  city!: string;
+  city?: string;
 
   @Field({ nullable: true })
-  postcode!: string;
+  postcode?: string;
 
   @Field({ nullable: true })
-  state!: string;
-}
-
-@ObjectType()
-export class UserStatus {
-  @Field(() => Boolean, { defaultValue: false })
-  isOnline: boolean;
-
-  @Field(() => String, { nullable: true })
-  typingFor?: string;
-
-  @Field(() => String)
-  lastSeen: string;
-
-  @Field(() => String)
-  userId: string;
+  state?: string;
 }
 
 @Resolver(() => User)
 export class UserResolver {
   // Get all users
-  @Authorized("admin")
+  // @Authorized("admin")
   @Query(() => [User])
   async listUsers(): Promise<User[]> {
     return await User.find({});
@@ -148,19 +132,13 @@ export class UserResolver {
   // User Registration
   @Mutation(() => UserResponse)
   async registerUser(
-    @Arg("name") name: string,
+    @Arg("data") data: UserInput,
     @Ctx() { req }: Context
   ): Promise<UserResponse> {
     try {
-      const userInfo = await getUserInfo(req.authToken);
-      if (!userInfo)
-        return {
-          error: {
-            code: "AUTH_ERROR",
-            message: "Failed to get User Info from auth token",
-          },
-        };
-      const userExists = await User.findOne(userInfo.uid);
+      const userExists = await User.findOne({
+        where: { phoneNo: data.phoneNo },
+      });
 
       if (userExists) {
         userExists.save();
@@ -168,8 +146,19 @@ export class UserResolver {
           user: userExists,
         };
       } else {
-        const user = await User.create({}).save();
-        console.log("[registerUser] Sign up Success", userInfo.email);
+        const user = await User.create({
+          first_Name: data.first_name,
+          last_Name: data.last_name,
+          email: data.email,
+          phoneNo: data.phoneNo,
+          type: data.type,
+          city: data.city,
+          address_1: data.address_1,
+          address_2: data.address_2,
+          avatar_url: data.avatar_url,
+          postcode: data.postcode,
+        }).save();
+        console.log("[registerUser] Sign up Success");
 
         return {
           user,
@@ -223,7 +212,7 @@ export class UserResolver {
     if (!currentUser) {
       return false;
     } else {
-      await User.delete(currentUser.userId);
+      await User.delete(currentUser.user_id);
       try {
         req.authId = null;
         req.authToken = null;
