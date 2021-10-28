@@ -1,0 +1,74 @@
+{
+	"name": "space-store-server",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"author": "KishorShivsharan",
+	"scripts": {
+		"dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\" -k",
+		"nodemon": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node src/index.ts'",
+		"genenv": "gen-env-types .env -o src/types/env.d.ts -e .",
+		"watch": "tsc -w",
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"type-check": "tsc --pretty --noEmit",
+		"lint": "eslint . --ext ts --ext tsx --ext js",
+		"format": "prettier --write .",
+		"typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+		"init-database": "yarn run typeorm migration:run -f src/typeorm.config.ts",
+		"prepare": "husky install"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"apollo-server-express": "^2.25.1",
+		"axios": "^0.21.1",
+		"class-validator": "^0.13.1",
+		"cors": "^2.8.5",
+		"cron": "^1.8.2",
+		"dotenv-safe": "^8.2.0",
+		"email-validator": "^2.0.4",
+		"expo-server-sdk": "^3.6.0",
+		"express": "^4.17.1",
+		"firebase-admin": "^9.9.0",
+		"graphql": "^15.5.0",
+		"ioredis": "^4.27.6",
+		"nanoid": "^3.1.23",
+		"nodemailer": "^6.6.2",
+		"pg": "^8.6.0",
+		"reflect-metadata": "^0.1.13",
+		"type-graphql": "^1.1.1",
+		"typeorm": "^0.2.34",
+		"typescript": "^4.3.5"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.10",
+		"@types/cron": "^1.7.2",
+		"@types/express": "^4.17.12",
+		"@types/ioredis": "^4.26.4",
+		"@types/node": "^15.12.4",
+		"@types/node-cron": "^2.0.3",
+		"@types/nodemailer": "^6.4.2",
+		"@typescript-eslint/eslint-plugin": "^4.27.0",
+		"@typescript-eslint/parser": "^4.27.0",
+		"concurrently": "^6.2.0",
+		"eslint": "^7.29.0",
+		"eslint-config-prettier": "^8.3.0",
+		"gen-env-types": "^1.3.0",
+		"husky": "^6.0.0",
+		"lint-staged": "^11.0.0",
+		"nodemon": "^2.0.7",
+		"prettier": "^2.3.1",
+		"ts-node": "^10.0.0"
+	},
+	"lint-staged": {
+		"*.@(ts|tsx)": [
+			"yarn lint",
+			"yarn format"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged",
+			"pre-push": "yarn run type-check"
+		}
+	}
+}
