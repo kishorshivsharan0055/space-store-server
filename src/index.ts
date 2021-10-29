@@ -78,7 +78,7 @@ const Main = async () => {
     },
   });
 
-  app.get("/ping", (_req, res) => res.send("PING"));
+  app.get("/", (_req, res) => res.send("PING"));
 
   const httpServer = http.createServer(app);
   apolloServer.installSubscriptionHandlers(httpServer);
