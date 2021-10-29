@@ -1,4 +1,4 @@
-import "dotenv-safe/config";
+require("dotenv").config({ silent: true });
 import path from "path";
 import * as TypeORM from "typeorm";
 import { __prod__ } from "./constants";

@@ -1,6 +1,5 @@
 import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
-import "dotenv-safe/config";
 import express from "express";
 import http from "http";
 import redis from "ioredis";
