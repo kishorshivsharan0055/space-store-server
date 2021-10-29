@@ -2,7 +2,6 @@ import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
 import express from "express";
 import http from "http";
-import redis from "ioredis";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import {
@@ -48,12 +47,6 @@ const Main = async () => {
       credentials: true,
     })
   );
-
-  const redisClient = new redis(process.env.REDIS_URL);
-
-  redisClient.on("error", (err: any) => {
-    console.error("Redis Error" + err);
-  });
 
   const schema = await buildSchema({
     resolvers: [UserResolver, ProductsResolver],
