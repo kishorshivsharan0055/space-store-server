@@ -15,6 +15,7 @@ import { ProductsResolver } from "./resolvers/productsResolver";
 import { UserResolver } from "./resolvers/userResolver";
 import typeormConfig from "./typeorm.config";
 import { authChecker } from "./utils/graphqlUtils";
+require("dotenv").config({ silent: true });
 
 const PORT = process.env.PORT || 8000;
 const Main = async () => {
