@@ -12,7 +12,7 @@ export default {
   username: "kishorshivsharan",
   password: "postgres",
   database: "spacestore",
-  // url: process.env.DATABASE_URL,
+  url: process.env.DATABASE_URL,
   logging: true,
   migrations: [path.join(__dirname, "./migrations/*")],
 } as Parameters<typeof TypeORM.createConnection>[0];
