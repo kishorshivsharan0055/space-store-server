@@ -11,8 +11,10 @@ import {
 } from "typeorm";
 import { ProductsResolver } from "./resolvers/productsResolver";
 import { UserResolver } from "./resolvers/userResolver";
-import typeormConfig from "./typeorm.config";
 import { authChecker } from "./utils/graphqlUtils";
+import path from "path";
+import { Users } from "./entities/Users";
+import { Products } from "./entities/Products";
 require("dotenv").config({ silent: true });
 
 const PORT = process.env.PORT || 8000;
@@ -25,7 +27,14 @@ const Main = async () => {
         getConnection();
       } catch (err) {
         if (err.constructor !== ConnectionNotFoundError) throw err;
-        await createConnection(typeormConfig);
+        await createConnection({
+          type: "postgres",
+          url: process.env.DATABASE_URL,
+          logging: true,
+          // synchronize: true,
+          migrations: [path.join(__dirname, "./migrations/*")],
+          entities: [Users, Products],
+        });
       }
 
       break;

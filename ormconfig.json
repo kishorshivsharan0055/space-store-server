@@ -2,9 +2,9 @@
   "type": "postgres",
   "host": "localhost",
   "port": 5432,
-  "username": "kishorshivsharan",
+  "username": "postgres",
   "password": "postgres",
   "database": "spacestore",
   "entities": ["dist/entities/*.js"],
-  "migrations": ["src/migrations/*.js"]
+  "migrations": ["dist/migrations/*.js"]
 }
