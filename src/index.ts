@@ -19,32 +19,17 @@ require("dotenv").config({ silent: true });
 
 const PORT = process.env.PORT || 8000;
 const Main = async () => {
-  let db_retries = 5;
+  const conn = await createConnection({
+    type: "postgres",
+    url: process.env.DATABASE_URL,
+    logging: true,
+    synchronize: true,
+    migrations: [path.join(__dirname, "./migrations/*")],
+    entities: [Users, Products],
+  });
 
-  while (db_retries) {
-    try {
-      try {
-        getConnection();
-      } catch (err) {
-        if (err.constructor !== ConnectionNotFoundError) throw err;
-        await createConnection({
-          type: "postgres",
-          url: process.env.DATABASE_URL,
-          logging: true,
-          // synchronize: true,
-          migrations: [path.join(__dirname, "./migrations/*")],
-          entities: [Users, Products],
-        });
-      }
-
-      break;
-    } catch (err) {
-      db_retries -= 1;
-      console.error(err);
-      console.warn("DB Retries Left: ", db_retries);
-      await new Promise((res) => setTimeout(res, 2000));
-    }
-  }
+  if (conn.isConnected) console.log("Database connected");
+  else console.log("Database not connected");
 
   const corsOrigins = ["http://localhost:3000"];
   const app = express();
