@@ -5,20 +5,22 @@ import http from "http";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
+import { Products } from "./entities/Products";
+import { Users } from "./entities/Users";
 import { ProductsResolver } from "./resolvers/productsResolver";
 import { UserResolver } from "./resolvers/userResolver";
 import { authChecker } from "./utils/graphqlUtils";
-require("dotenv").config({ silent: true });
+require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
 const Main = async () => {
   try {
     const conn = await createConnection({
       type: "postgres",
-      url: process.env.DATABASE_URL,
+      url: "postgres://ywgfvksjxuhwhf:c49c5387026296162b2def05efd120bcc7b40ceb5c1ec8f51d1c8196a72b1ce3@ec2-44-199-158-170.compute-1.amazonaws.com:5432/d7foelic23r8ie",
       logging: true,
       synchronize: true,
-      entities: ["dist/entities/*.js", "src/entities/*.ts"],
+      entities: ["dist/entities/*.js", Users, Products],
     });
 
     await conn.runMigrations();
