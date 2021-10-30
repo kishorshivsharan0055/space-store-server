@@ -19,7 +19,9 @@ const Main = async () => {
     url: "postgres://ywgfvksjxuhwhf:c49c5387026296162b2def05efd120bcc7b40ceb5c1ec8f51d1c8196a72b1ce3@ec2-44-199-158-170.compute-1.amazonaws.com:5432/d7foelic23r8ie",
     logging: true,
     synchronize: true,
-    ssl: true,
+    ssl: {
+      rejectUnauthorized: false,
+    },
     entities: [Users, Products],
   });
 
