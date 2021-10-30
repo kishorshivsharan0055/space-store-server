@@ -4,17 +4,10 @@ import express from "express";
 import http from "http";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
-import {
-  ConnectionNotFoundError,
-  createConnection,
-  getConnection,
-} from "typeorm";
+import { createConnection } from "typeorm";
 import { ProductsResolver } from "./resolvers/productsResolver";
 import { UserResolver } from "./resolvers/userResolver";
 import { authChecker } from "./utils/graphqlUtils";
-import path from "path";
-import { Users } from "./entities/Users";
-import { Products } from "./entities/Products";
 require("dotenv").config({ silent: true });
 
 const PORT = process.env.PORT || 8000;
@@ -25,7 +18,7 @@ const Main = async () => {
       url: process.env.DATABASE_URL,
       logging: true,
       synchronize: true,
-      entities: ["dist/entities/*.js"],
+      entities: ["dist/entities/*.js", "src/entities/*.ts"],
     });
 
     await conn.runMigrations();
