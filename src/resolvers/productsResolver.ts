@@ -59,9 +59,6 @@ export class ProductCreateInput {
   @Field(() => String, { nullable: true })
   height!: string;
 
-  @Field(() => [String], { nullable: true })
-  related_ids!: string[];
-
   @Field(() => String, { nullable: true })
   images!: string;
 }
@@ -98,7 +95,6 @@ export class ProductsResolver {
         length: data.length,
         width: data.width,
         height: data.height,
-        related_ids: data.related_ids,
         weight: data.weight,
       }).save();
       console.log("[registerUser] Sign up Success");
