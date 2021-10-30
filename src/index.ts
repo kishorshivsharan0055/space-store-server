@@ -24,13 +24,11 @@ const Main = async () => {
       type: "postgres",
       url: process.env.DATABASE_URL,
       logging: true,
-      username: process.env.USERNAME,
-      password: process.env.PASSWORD,
-      database: process.env.DATABASE,
       synchronize: true,
-      migrations: [path.join(__dirname, "./migrations/*")],
-      entities: [Users, Products],
+      entities: ["dist/entities/*.js"],
     });
+
+    await conn.runMigrations();
 
     if (conn.isConnected) console.log("Database connected");
     else console.log("Database not connected");
@@ -72,7 +70,9 @@ const Main = async () => {
     },
   });
 
-  app.get("/", (_req, res) => res.send("PING"));
+  app.get("/", (_req, res) => {
+    res.send("PING");
+  });
 
   const httpServer = http.createServer(app);
   apolloServer.installSubscriptionHandlers(httpServer);
