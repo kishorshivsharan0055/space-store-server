@@ -19,17 +19,24 @@ require("dotenv").config({ silent: true });
 
 const PORT = process.env.PORT || 8000;
 const Main = async () => {
-  const conn = await createConnection({
-    type: "postgres",
-    url: process.env.DATABASE_URL,
-    logging: true,
-    synchronize: true,
-    migrations: [path.join(__dirname, "./migrations/*")],
-    entities: [Users, Products],
-  });
+  try {
+    const conn = await createConnection({
+      type: "postgres",
+      url: process.env.DATABASE_URL,
+      logging: true,
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
+      synchronize: true,
+      migrations: [path.join(__dirname, "./migrations/*")],
+      entities: [Users, Products],
+    });
 
-  if (conn.isConnected) console.log("Database connected");
-  else console.log("Database not connected");
+    if (conn.isConnected) console.log("Database connected");
+    else console.log("Database not connected");
+  } catch (err) {
+    console.log(err);
+  }
 
   const corsOrigins = ["http://localhost:3000"];
   const app = express();
