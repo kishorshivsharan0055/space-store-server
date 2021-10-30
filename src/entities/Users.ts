@@ -12,7 +12,7 @@ import {
 @Entity({
   name: "users",
 })
-export class User extends BaseEntity {
+export class Users extends BaseEntity {
   @Field(() => String)
   @PrimaryGeneratedColumn()
   user_id: string;

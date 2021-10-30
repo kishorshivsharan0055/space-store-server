@@ -11,15 +11,15 @@ import {
 } from "type-graphql";
 import { ILike, In } from "typeorm";
 import { NOT_LOGGED_IN_ERROR } from "../constants";
-import { User } from "../entities/User";
+import { Users } from "../entities/Users";
 import { Context, CustomError } from "../types/types";
 
 @ObjectType()
 export class UserResponse {
   @Field(() => CustomError, { nullable: true })
   error?: CustomError;
-  @Field(() => User, { nullable: true })
-  user?: User;
+  @Field(() => Users, { nullable: true })
+  user?: Users;
 }
 
 @ObjectType()
@@ -66,23 +66,23 @@ export class UserInput {
   state?: string;
 }
 
-@Resolver(() => User)
+@Resolver(() => Users)
 export class UserResolver {
   // Get all users
   // @Authorized("admin")
-  @Query(() => [User])
-  async listUsers(): Promise<User[]> {
-    return await User.find({});
+  @Query(() => [Users])
+  async listUsers(): Promise<Users[]> {
+    return await Users.find({});
   }
 
   // Currently Signed in User
   @Authorized()
-  @Query(() => User, { nullable: true })
-  async currentUser(@Ctx() { req }: Context): Promise<User | null> {
+  @Query(() => Users, { nullable: true })
+  async currentUser(@Ctx() { req }: Context): Promise<Users | null> {
     if (!req.authId) {
       return null;
     }
-    const currentUser = await User.findOne(req.authId);
+    const currentUser = await Users.findOne(req.authId);
     if (!currentUser) {
       return null;
     } else {
@@ -90,27 +90,27 @@ export class UserResolver {
     }
   }
 
-  @Query(() => User, { nullable: true })
+  @Query(() => Users, { nullable: true })
   async getUserById(
     @Arg("userId", () => String) userId: string
-  ): Promise<User | undefined> {
-    return await User.findOne(userId);
+  ): Promise<Users | undefined> {
+    return await Users.findOne(userId);
   }
 
-  @Mutation(() => User, { nullable: true })
+  @Mutation(() => Users, { nullable: true })
   async checkUserExists(
     @Arg("phoneNo", () => String) phoneNo: string
-  ): Promise<User | undefined> {
-    return await User.findOne({
+  ): Promise<Users | undefined> {
+    return await Users.findOne({
       where: {
         phoneNo,
       },
     });
   }
 
-  @Query(() => [User])
-  async searchUser(@Arg("name") name: string): Promise<User[]> {
-    return await User.find({
+  @Query(() => [Users])
+  async searchUser(@Arg("name") name: string): Promise<Users[]> {
+    return await Users.find({
       where: {
         name: ILike(`%${name}%`),
       },
@@ -124,7 +124,7 @@ export class UserResolver {
     @Ctx() { req }: Context
   ): Promise<UserResponse> {
     try {
-      const userExists = await User.findOne({
+      const userExists = await Users.findOne({
         where: { phoneNo: data.phoneNo },
       });
 
@@ -134,7 +134,7 @@ export class UserResolver {
           user: userExists,
         };
       } else {
-        const user = await User.create({
+        const user = await Users.create({
           first_Name: data.first_name,
           last_Name: data.last_name,
           email: data.email,
@@ -175,7 +175,7 @@ export class UserResolver {
         error: NOT_LOGGED_IN_ERROR,
       };
     }
-    const currentUser = await User.findOne(req.authId);
+    const currentUser = await Users.findOne(req.authId);
     if (!currentUser) {
       return {
         error: NOT_LOGGED_IN_ERROR,
@@ -196,11 +196,11 @@ export class UserResolver {
   async deleteUser(@Ctx() { req }: Context): Promise<boolean> {
     if (!req.authId) return false;
 
-    const currentUser = await User.findOne(req.authId);
+    const currentUser = await Users.findOne(req.authId);
     if (!currentUser) {
       return false;
     } else {
-      await User.delete(currentUser.user_id);
+      await Users.delete(currentUser.user_id);
       try {
         req.authId = null;
         req.authToken = null;

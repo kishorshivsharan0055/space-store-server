@@ -1,6 +1,6 @@
 import { Context } from "../types/types";
 import { AuthChecker } from "type-graphql";
-import { User } from "../entities/User";
+import { Users } from "../entities/Users";
 
 export const authChecker: AuthChecker<Context> = async ({ context }, roles) => {
   const { req } = context;
@@ -10,7 +10,7 @@ export const authChecker: AuthChecker<Context> = async ({ context }, roles) => {
     return false;
   }
 
-  const user = await User.findOne(req.authId);
+  const user = await Users.findOne(req.authId);
   if (!user) {
     console.error("No user");
     return false;

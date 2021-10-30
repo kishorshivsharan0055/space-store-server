@@ -3,11 +3,11 @@ import path from "path";
 import * as TypeORM from "typeorm";
 import { __prod__ } from "./constants";
 import { Products } from "./entities/Products";
-import { User } from "./entities/User";
+import { Users } from "./entities/Users";
 
 export default {
   type: "postgres",
-  entities: [User, Products],
+  entities: [Users, Products],
   synchronize: true,
   username: "kishorshivsharan",
   password: "postgres",
