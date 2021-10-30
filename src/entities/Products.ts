@@ -64,10 +64,6 @@ export class Products extends BaseEntity {
   height!: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: "text", array: true, nullable: true })
-  related_ids!: string[];
-
-  @Field(() => String, { nullable: true })
   @Column({ type: "text", nullable: true })
   images!: string;
 
