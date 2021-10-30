@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 
 @Entity({
-  name: "products",
+  name: "Products",
 })
 @ObjectType()
 export class Products extends BaseEntity {

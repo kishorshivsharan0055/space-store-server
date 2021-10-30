@@ -10,7 +10,7 @@ import {
 
 @ObjectType()
 @Entity({
-  name: "users",
+  name: "Users",
 })
 export class Users extends BaseEntity {
   @Field(() => String)
