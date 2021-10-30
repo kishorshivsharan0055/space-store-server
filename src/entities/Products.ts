@@ -8,10 +8,8 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-@Entity({
-  name: "Products",
-})
 @ObjectType()
+@Entity()
 export class Products extends BaseEntity {
   @Field(() => Int)
   @PrimaryGeneratedColumn()

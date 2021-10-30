@@ -9,9 +9,7 @@ import {
 } from "typeorm";
 
 @ObjectType()
-@Entity({
-  name: "Users",
-})
+@Entity()
 export class Users extends BaseEntity {
   @Field(() => String)
   @PrimaryGeneratedColumn()
