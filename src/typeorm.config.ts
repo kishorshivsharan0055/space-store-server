@@ -14,5 +14,5 @@ export default {
   database: "spacestore",
   url: process.env.DATABASE_URL,
   logging: true,
-  migrations: [path.join(__dirname, "./migrations/*")],
+  migrations: [path.join(__dirname, "src/migrations/*")],
 } as Parameters<typeof TypeORM.createConnection>[0];

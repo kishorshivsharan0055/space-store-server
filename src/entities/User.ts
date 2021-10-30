@@ -35,7 +35,7 @@ export class User extends BaseEntity {
 
   @Field(() => String, { nullable: false })
   @Column({ nullable: true })
-  type: "CUSTOMER" | "ADMIN";
+  type: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })

@@ -1,0 +1,10 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "kishorshivsharan",
+  "password": "postgres",
+  "database": "spacestore",
+  "entities": ["dist/entities/*.js"],
+  "migrations": ["src/migrations/*.js"]
+}
