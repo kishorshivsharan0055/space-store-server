@@ -8,11 +8,11 @@ import { Users } from "./entities/Users";
 export default {
   type: "postgres",
   entities: [Users, Products],
-  synchronize: true,
-  username: "kishorshivsharan",
-  password: "postgres",
-  database: "spacestore",
+  synchronize: false,
+  // username: "kishorshivsharan",
+  // password: "postgres",
+  // database: "spacestore",
   url: process.env.DATABASE_URL,
-  logging: true,
+  logging: false,
   migrations: [path.join(__dirname, "src/migrations/*")],
 } as Parameters<typeof TypeORM.createConnection>[0];
