@@ -78,8 +78,7 @@ export class ProductsResolver {
 
   @Mutation(() => ProductResponse)
   async addProducts(
-    @Arg("data") data: ProductCreateInput,
-    @Ctx() { req }: Context
+    @Arg("data") data: ProductCreateInput
   ): Promise<ProductResponse> {
     try {
       const product = await Products.create({
