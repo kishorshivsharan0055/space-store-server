@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, Int, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -11,9 +11,9 @@ import {
 @ObjectType()
 @Entity()
 export class Orders extends BaseEntity {
-  @Field(() => String)
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
-  order_id: string;
+  id: number;
 
   @Field(() => String, { nullable: true })
   @Column({ type: "text", nullable: true })
@@ -43,9 +43,11 @@ export class Orders extends BaseEntity {
   @Column({ nullable: true, type: "text", array: true })
   product_ids: string[];
 
+  @Field(() => String)
   @CreateDateColumn()
   date_created: Date;
 
+  @Field(() => String)
   @UpdateDateColumn()
   date_modified: Date;
 

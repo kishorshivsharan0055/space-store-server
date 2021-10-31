@@ -1,5 +1,5 @@
-import { Orders } from "src/entities/Orders";
-import { Context, CustomError } from "src/types/types";
+import { Orders } from "../entities/Orders";
+import { Context, CustomError } from "../types/types";
 import {
   Arg,
   Ctx,
@@ -86,7 +86,7 @@ export class OrderResolver {
         city: data.city,
         postcode: data.postcode,
         state: data.state,
-      });
+      }).save();
 
       console.log("Order placed successfully");
 

@@ -90,11 +90,11 @@ export class UserResolver {
     }
   }
 
-  @Query(() => Users, { nullable: true })
+  @Mutation(() => Users, { nullable: true })
   async getUserById(
-    @Arg("userId", () => String) userId: string
+    @Arg("user_id", () => String) user_id: string
   ): Promise<Users | undefined> {
-    return await Users.findOne(userId);
+    return await Users.findOne({ where: { user_id: user_id } });
   }
 
   @Mutation(() => Users, { nullable: true })
@@ -163,19 +163,12 @@ export class UserResolver {
     }
   }
 
-  // User Update
-  @Authorized()
   @Mutation(() => UserResponse)
-  async updateUser(
-    @Arg("data") data: UserInput,
-    @Ctx() { req }: Context
-  ): Promise<UserResponse> {
-    if (!req.authId) {
-      return {
-        error: NOT_LOGGED_IN_ERROR,
-      };
-    }
-    const currentUser = await Users.findOne(req.authId);
+  async updateUser(@Arg("data") data: UserInput): Promise<UserResponse> {
+    const currentUser = await Users.findOne({
+      where: { phoneNo: data.phoneNo },
+    });
+
     if (!currentUser) {
       return {
         error: NOT_LOGGED_IN_ERROR,
