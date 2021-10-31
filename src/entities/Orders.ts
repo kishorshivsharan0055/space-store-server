@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Products } from "./Products";
 
 @ObjectType()
 @Entity()
@@ -39,9 +40,9 @@ export class Orders extends BaseEntity {
   @Column({ nullable: true })
   amount?: string;
 
-  @Field(() => [String], { nullable: true })
-  @Column({ nullable: true, type: "text", array: true })
-  product_ids: string[];
+  @Field(() => [Products], { nullable: true })
+  @Column({ nullable: true, type: "jsonb", array: false })
+  products: Products[];
 
   @Field(() => String)
   @CreateDateColumn()

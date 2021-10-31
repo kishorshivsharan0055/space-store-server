@@ -1,8 +1,6 @@
-import { Orders } from "../entities/Orders";
-import { Context, CustomError } from "../types/types";
+import { ProductInputTypes } from "../types/InputTypes";
 import {
   Arg,
-  Ctx,
   Field,
   InputType,
   Mutation,
@@ -10,6 +8,9 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
+import { Orders } from "../entities/Orders";
+import { Products } from "../entities/Products";
+import { CustomError } from "../types/types";
 
 @ObjectType()
 export class OrderResponse {
@@ -39,8 +40,8 @@ export class OrderInput {
   @Field(() => String)
   amount?: string;
 
-  @Field(() => [String], { nullable: true })
-  product_ids: string[];
+  @Field(() => [ProductInputTypes])
+  products?: [Products];
 
   @Field(() => String, { nullable: true })
   address_1?: string;
@@ -78,7 +79,7 @@ export class OrderResolver {
         payment_method: data.payment_method,
         payment_status: data.payment_status,
         customer_id: data.customer_id,
-        product_ids: data.product_ids,
+        products: data.products,
         order_status: data.order_status,
         amount: data.amount,
         address_1: data.address_1,
@@ -102,5 +103,15 @@ export class OrderResolver {
         },
       };
     }
+  }
+
+  @Mutation(() => [Orders])
+  async getMyOrders(@Arg("user_id") user_id: string): Promise<Orders[] | null> {
+    const orders = await Orders.find({
+      where: { customer_id: user_id },
+      order: { date_modified: "DESC" },
+    });
+
+    return orders;
   }
 }
