@@ -1,7 +1,6 @@
 import {
   Arg,
   Authorized,
-  Ctx,
   Field,
   InputType,
   Int,
@@ -11,7 +10,7 @@ import {
   Resolver,
 } from "type-graphql";
 import { Products } from "../entities/Products";
-import { Context, CustomError } from "../types/types";
+import { CustomError } from "../types/types";
 
 @ObjectType()
 export class ProductResponse {

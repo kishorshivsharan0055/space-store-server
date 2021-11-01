@@ -1,8 +1,8 @@
+import crypto from "crypto";
 import dotenv from "dotenv";
-import express, { Request } from "express";
+import express from "express";
 import Razorpay from "razorpay";
 import shortid from "shortid";
-import crypto from "crypto";
 
 dotenv.config();
 
