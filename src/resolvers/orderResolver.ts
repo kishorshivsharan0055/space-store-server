@@ -25,6 +25,12 @@ export class OrderInput {
   @Field(() => String, { nullable: true })
   razorpay_order_id!: string;
 
+  @Field(() => String, { nullable: true })
+  razorpay_payment_id!: string;
+
+  @Field(() => String, { nullable: true })
+  razorpay_signature!: string;
+
   @Field()
   payment_method!: string;
 
@@ -76,6 +82,9 @@ export class OrderResolver {
   ): Promise<OrderResponse | null> {
     try {
       const order = await Orders.create({
+        razorpay_order_id: data.razorpay_order_id,
+        razorpay_payment_id: data.razorpay_payment_id,
+        razorpay_signature: data.razorpay_signature,
         payment_method: data.payment_method,
         payment_status: data.payment_status,
         customer_id: data.customer_id,

@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import express from "express";
+import express, { Request } from "express";
 import Razorpay from "razorpay";
 import shortid from "shortid";
 import crypto from "crypto";
@@ -8,7 +8,7 @@ dotenv.config();
 
 const router = express.Router();
 
-router.post("/orders", async (_req, res) => {
+router.post("/orders", async (req, res) => {
   try {
     const instance = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
@@ -16,12 +16,13 @@ router.post("/orders", async (_req, res) => {
     });
 
     const options = {
-      amount: 10 * 100,
+      amount: req.body.params.amount * 100,
       currency: "INR",
       receipt: shortid.generate(),
     };
 
     const order = await instance.orders.create(options);
+    console.log(order);
 
     if (!order) return res.status(500).send("some error occured");
 

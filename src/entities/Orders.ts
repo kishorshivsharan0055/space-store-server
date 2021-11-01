@@ -20,6 +20,14 @@ export class Orders extends BaseEntity {
   @Column({ type: "text", nullable: true })
   razorpay_order_id!: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
+  razorpay_payment_id!: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
+  razorpay_signature!: string;
+
   @Field()
   @Column({ type: "text" })
   payment_method!: string;
