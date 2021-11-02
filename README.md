@@ -12,6 +12,8 @@
 - [`husky`](https://github.com/typicode/husky) for commit hooks
 - Protgres SQL database
 
+## Features
+
 ## Development
 
 ### Install Dependencies
