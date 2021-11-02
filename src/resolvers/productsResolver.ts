@@ -76,7 +76,7 @@ export class ProductsResolver {
   }
 
   // Get Products by category
-  @Query(() => [Products])
+  @Mutation(() => [Products])
   async getProductsByCategory(@Arg("data") data: string): Promise<Products[]> {
     return await Products.find({
       order: {
