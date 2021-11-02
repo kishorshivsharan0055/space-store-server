@@ -19,15 +19,15 @@ const PORT = process.env.PORT || 8000;
 const Main = async () => {
   const conn = await createConnection({
     type: "postgres",
-    url: process.env.DATABASE_URL,
-    // database: "spacestore",
-    // username: "kishorshivsharan",
-    // password: "postgres",
+    // url: process.env.DATABASE_URL,
+    database: "spacestore",
+    username: "kishorshivsharan",
+    password: "postgres",
     logging: true,
     synchronize: true,
-    ssl: {
-      rejectUnauthorized: false,
-    },
+    // ssl: {
+    //   rejectUnauthorized: false,
+    // },
     entities: [Users, Products, Orders],
   });
 

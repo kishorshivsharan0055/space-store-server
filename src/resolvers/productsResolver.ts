@@ -9,6 +9,7 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
+import { ILike } from "typeorm";
 import { Products } from "../entities/Products";
 import { CustomError } from "../types/types";
 
@@ -130,5 +131,14 @@ export class ProductsResolver {
     @Arg("id", () => Int) id: number
   ): Promise<Products | undefined> {
     return await Products.findOne(id);
+  }
+
+  @Mutation(() => [Products])
+  async searchProducts(@Arg("name") name: string): Promise<Products[]> {
+    return await Products.find({
+      where: {
+        name: ILike(`%${name}%`),
+      },
+    });
   }
 }
