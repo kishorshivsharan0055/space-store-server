@@ -75,6 +75,18 @@ export class ProductsResolver {
     });
   }
 
+  // Get Products by category
+  @Query(() => [Products])
+  async getProductsByCategory(@Arg("data") data: string): Promise<Products[]> {
+    return await Products.find({
+      order: {
+        date_created: "DESC",
+      },
+      where: { category: data },
+    });
+  }
+
+  // add Products
   @Mutation(() => ProductResponse)
   async addProducts(
     @Arg("data") data: ProductCreateInput
@@ -111,6 +123,7 @@ export class ProductsResolver {
     }
   }
 
+  // get Products by ID
   @Authorized()
   @Query(() => Products, { nullable: true })
   async getProductsById(

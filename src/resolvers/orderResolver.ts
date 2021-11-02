@@ -114,6 +114,31 @@ export class OrderResolver {
     }
   }
 
+  @Mutation(() => OrderResponse)
+  async cancelOrder(
+    @Arg("order_id") order_id: string
+  ): Promise<OrderResponse | null> {
+    try {
+      const order = await Orders.findOne({ where: { id: order_id } });
+
+      if (order) {
+        order.order_status = "CANCELLED";
+        order.save();
+      }
+
+      return {
+        order,
+      };
+    } catch (err) {
+      return {
+        error: {
+          code: "SERROR_ERROR",
+          message: "Failed to cancel order",
+        },
+      };
+    }
+  }
+
   @Mutation(() => [Orders])
   async getMyOrders(@Arg("user_id") user_id: string): Promise<Orders[] | null> {
     const orders = await Orders.find({
